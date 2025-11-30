@@ -1,4 +1,4 @@
-.login-container {
+.registration-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -7,7 +7,7 @@
   padding: 20px;
 }
 
-.login-card {
+.registration-card {
   background: white;
   padding: 40px;
   border-radius: 12px;
@@ -88,12 +88,12 @@
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   margin-top: 10px;
 
-  &:hover {
+  &:hover:not(:disabled) {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
   }
 
-  &:active {
+  &:active:not(:disabled) {
     transform: translateY(0);
   }
 
