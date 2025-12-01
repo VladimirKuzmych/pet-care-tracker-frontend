@@ -1,5 +1,36 @@
 <div class="dashboard-content">
-  <h2>Dashboard</h2>
-  <p>Welcome to your dashboard</p>
-  <p>Dashboard content coming soon...</p>
+  <div class="dashboard-header">
+    <h2>My Pets</h2>
+    <button class="add-pet-btn" (click)="navigateToAddPet()" title="Add Pet">
+      <span class="plus-icon">+</span>
+      <span class="icon-text">Add Pet</span>
+    </button>
+  </div>
+
+  <div class="pets-container">
+    @if (pets$ | async; as pets) {
+      @if (pets.length === 0) {
+        <div class="empty-state">
+          <p>No pets yet. Add your first pet!</p>
+        </div>
+      } @else {
+        <div class="pets-grid">
+          @for (pet of pets; track pet.id) {
+            <div class="pet-card">
+              <div class="pet-icon">🐾</div>
+              <div class="pet-info">
+                <h3>{{ pet.name }}</h3>
+                <p class="pet-breed">{{ pet.breed }}</p>
+                <p class="pet-kind">{{ getKindDisplay(pet) }}</p>
+              </div>
+            </div>
+          }
+        </div>
+      }
+    }
+  </div>
+
+  @if (errorMessage) {
+    <div class="error-message">{{ errorMessage }}</div>
+  }
 </div>
