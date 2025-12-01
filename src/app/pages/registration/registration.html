@@ -1,6 +1,11 @@
 <div class="registration-container">
   <div class="registration-card">
     <h1>Create Account</h1>
+    
+    <div class="error-alert" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+    
     <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
         <label for="firstName">First Name</label>
@@ -73,7 +78,9 @@
         </div>
       </div>
 
-      <button type="submit" class="btn-submit" [disabled]="registrationForm.invalid">Register</button>
+      <button type="submit" class="btn-submit" [disabled]="registrationForm.invalid || isLoading">
+        {{ isLoading ? 'Creating account...' : 'Register' }}
+      </button>
       
       <div class="login-link">
         Already have an account? <a routerLink="/login">Login here</a>

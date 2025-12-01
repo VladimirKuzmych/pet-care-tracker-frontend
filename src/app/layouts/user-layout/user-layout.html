@@ -1,0 +1,15 @@
+<div class="user-layout">
+  <header class="header">
+    <div class="header-content">
+      <h1>Pet Care Tracker</h1>
+      <div class="user-info" *ngIf="currentUser$ | async as currentUser">
+        <span class="user-name">{{ currentUser.firstName }} {{ currentUser.lastName }}</span>
+        <button class="btn-logout" (click)="logout()">Logout</button>
+      </div>
+    </div>
+  </header>
+  
+  <main class="main-content">
+    <router-outlet />
+  </main>
+</div>

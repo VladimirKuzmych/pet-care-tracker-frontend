@@ -1,6 +1,11 @@
 <div class="login-container">
   <div class="login-card">
     <h1>Login</h1>
+    
+    <div class="error-alert" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+    
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
         <label for="email">Email</label>
@@ -26,12 +31,12 @@
         />
         <div class="error-message" *ngIf="formControls['password'].errors; let passwordErrors">
           <span *ngIf="passwordErrors['required']">Password is required</span>
-          <span *ngIf="passwordErrors['minlength']">Password must be at least 8 characters</span>
-          <span *ngIf="passwordErrors['pattern']">Password must contain digits and non-digits</span>
         </div>
       </div>
 
-      <button type="submit" class="btn-submit">Login</button>
+      <button type="submit" class="btn-submit" [disabled]="loginForm.invalid || isLoading">
+        {{ isLoading ? 'Logging in...' : 'Login' }}
+      </button>
       
       <div class="login-link">
         Don't have an account? <a routerLink="/registration">Register here</a>
