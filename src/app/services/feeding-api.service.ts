@@ -1,0 +1,28 @@
+import { inject, Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
+import { Feeding } from '../models/feeding.model';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class FeedingApiService {
+  private readonly httpClient = inject(HttpClient);
+
+  getAllForPet(petId: string): Observable<Feeding[]> {
+    return this.httpClient.get<Feeding[]>(`${environment.apiUrl}/pets/${petId}/feedings`);
+  }
+
+  create(petId: string, feeding: Feeding): Observable<Feeding> {
+    return this.httpClient.post<Feeding>(`${environment.apiUrl}/pets/${petId}/feedings`, feeding);
+  }
+
+  update(petId: string, feedingId: string, feeding: Feeding): Observable<Feeding> {
+    return this.httpClient.put<Feeding>(`${environment.apiUrl}/pets/${petId}/feedings/${feedingId}`, feeding);
+  }
+
+  delete(petId: string, feedingId: string): Observable<void> {
+    return this.httpClient.delete<void>(`${environment.apiUrl}/pets/${petId}/feedings/${feedingId}`);
+  }
+}

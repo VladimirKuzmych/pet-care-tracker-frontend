@@ -1,0 +1,88 @@
+<div class="edit-pet-container">
+  <div class="edit-pet-card">
+    <h1>Edit Pet</h1>
+
+    <div class="error-alert" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+
+    <div class="loading-state" *ngIf="isLoadingData">
+      <p>Loading pet data...</p>
+    </div>
+
+    <form [formGroup]="petForm" (ngSubmit)="onSubmit()" *ngIf="!isLoadingData">
+      <div class="form-group">
+        <label>Kind</label>
+        <div class="radio-button-group">
+          <label class="radio-button">
+            <input type="radio" formControlName="kind" value="dog" />
+            <span class="radio-button-text">🐶 Dog</span>
+          </label>
+          <label class="radio-button">
+            <input type="radio" formControlName="kind" value="cat" />
+            <span class="radio-button-text">😼 Cat</span>
+          </label>
+          <label class="radio-button">
+            <input type="radio" formControlName="kind" value="other" />
+            <span class="radio-button-text">🦎 Other</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group" *ngIf="isOtherKind">
+        <label for="customKind">Specify Kind</label>
+        <input
+          type="text"
+          id="customKind"
+          formControlName="customKind"
+          class="form-control"
+          placeholder="e.g., Rabbit, Bird, etc."
+        />
+        <div class="error-message" *ngIf="formControls['customKind'].errors; let customKindErrors">
+          <span *ngIf="customKindErrors['required']">Please specify the kind</span>
+          <span *ngIf="customKindErrors['minlength']">Kind must be at least 2 characters</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="breed">Breed</label>
+        <input
+          type="text"
+          id="breed"
+          formControlName="breed"
+          class="form-control"
+        />
+        <div class="error-message" *ngIf="formControls['breed'].errors; let breedErrors">
+          <span *ngIf="breedErrors['required']">Breed is required</span>
+          <span *ngIf="breedErrors['minlength']">Breed must be at least 2 characters</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="name">Pet Name</label>
+        <input
+          type="text"
+          id="name"
+          formControlName="name"
+          class="form-control"
+        />
+        <div class="error-message" *ngIf="formControls['name'].errors; let nameErrors">
+          <span *ngIf="nameErrors['required']">Pet name is required</span>
+          <span *ngIf="nameErrors['minlength']">Pet name must be at least 2 characters</span>
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button type="button" class="btn-delete" (click)="onDelete()" [disabled]="isLoading">
+          {{ isLoading ? 'Deleting...' : 'Delete' }}
+        </button>
+        <button type="button" class="btn-secondary" (click)="onCancel()" [disabled]="isLoading">
+          Cancel
+        </button>
+        <button type="submit" class="btn-submit" [disabled]="petForm.invalid || isLoading">
+          {{ isLoading ? 'Updating...' : 'Update Pet' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

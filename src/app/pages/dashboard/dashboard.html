@@ -1,14 +1,19 @@
 <div class="dashboard-content">
   <div class="dashboard-header">
-    <h2>My Pets</h2>
-    <button class="add-pet-btn" (click)="navigateToAddPet()" title="Add Pet">
-      <span class="plus-icon">+</span>
-      <span class="icon-text">Add Pet</span>
-    </button>
+    <div class="header-actions">
+      <button class="add-feeding-btn" (click)="navigateToFeedings()" title="Add Feeding">
+        <span class="icon">🍽️</span>
+        <span class="icon-text">Add Feeding</span>
+      </button>
+      <button class="add-pet-btn" (click)="navigateToAddPet()" title="Add Pet">
+        <span class="plus-icon">+</span>
+        <span class="icon-text">Add Pet</span>
+      </button>
+    </div>
   </div>
 
   <div class="pets-container">
-    @if (pets$ | async; as pets) {
+    @if (pets) {
       @if (pets.length === 0) {
         <div class="empty-state">
           <p>No pets yet. Add your first pet!</p>
@@ -16,7 +21,7 @@
       } @else {
         <div class="pets-grid">
           @for (pet of pets; track pet.id) {
-            <div class="pet-card">
+            <div class="pet-card" (click)="navigateToEditPet(pet.id!)">
               <div class="pet-icon">🐾</div>
               <div class="pet-info">
                 <h3>{{ pet.name }}</h3>

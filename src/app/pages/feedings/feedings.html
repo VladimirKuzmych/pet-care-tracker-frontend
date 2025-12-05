@@ -1,0 +1,102 @@
+<div class="feedings-container">
+  <div class="header">
+    <h1>Feeding History</h1>
+  </div>
+
+  <div class="header-actions">
+    <div class="pet-filter" *ngIf="pets.length > 0">
+      <select id="pet-filter" [(ngModel)]="selectedPetId" (change)="onPetFilterChange()">
+        <option *ngFor="let pet of pets" [value]="pet.id">{{ pet.name }}</option>
+      </select>
+    </div>
+    <button class="btn btn-primary" (click)="openModal()">Add Feeding</button>
+  </div>
+
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="isLoading" class="loading">Loading...</div>
+
+  <div *ngIf="!isLoading && feedingsByDate.length === 0" class="no-data">
+    <p>No feeding records yet. Click "Add Feeding" to get started!</p>
+  </div>
+
+  <div class="feeding-groups">
+    <div *ngFor="let group of feedingsByDate" class="date-group">
+      <h2 class="date-header">{{ group.date }}</h2>
+      <div class="feeding-list">
+        <div *ngFor="let feeding of group.feedings" class="feeding-item">
+          <div class="feeding-time">{{ formatTime(feeding.fedAt) }}</div>
+          <div class="feeding-details">
+            <div class="grams">{{ feeding.grams }}g</div>
+            <div *ngIf="feeding.notes" class="notes">{{ feeding.notes }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div *ngIf="showModal" class="modal-overlay" (click)="closeModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2>Add Feeding</h2>
+        <button class="close-btn" (click)="closeModal()">&times;</button>
+      </div>
+      <form (ngSubmit)="submitFeeding()">
+        <div class="form-group">
+          <label for="pet">Pet *</label>
+          <select id="pet" [(ngModel)]="newFeeding.petId" name="pet" required>
+            <option *ngFor="let pet of pets" [value]="pet.id">{{ pet.name }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="fedAt">Date & Time *</label>
+          <input
+            type="datetime-local"
+            id="fedAt"
+            [(ngModel)]="newFeeding.fedAt"
+            name="fedAt"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="grams">Grams *</label>
+          <input
+            #gramsInput
+            type="number"
+            id="grams"
+            [(ngModel)]="newFeeding.grams"
+            name="grams"
+            placeholder="e.g., 200"
+            min="1"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="notes">Notes</label>
+          <textarea
+            id="notes"
+            [(ngModel)]="newFeeding.notes"
+            name="notes"
+            rows="3"
+            placeholder="Any additional notes..."
+          ></textarea>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" (click)="closeModal()">
+            Cancel
+          </button>
+          <button type="submit" class="btn btn-primary" [disabled]="isLoading || !gramsInput.value">
+            {{ isLoading ? 'Adding...' : 'Add Feeding' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

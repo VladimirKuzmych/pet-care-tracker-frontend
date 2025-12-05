@@ -16,6 +16,7 @@ export class Dashboard implements OnInit {
   private router = inject(Router);
 
   pets$!: Observable<Pet[]>;
+  pets: Pet[] = [];
   isLoading = false;
   errorMessage = '';
 
@@ -26,14 +27,31 @@ export class Dashboard implements OnInit {
   loadPets(): void {
     this.isLoading = true;
     this.errorMessage = '';
-    this.pets$ = this.petApiService.getAll();
+    this.petApiService.getAll().subscribe({
+      next: (pets) => {
+        this.pets = pets;
+        this.isLoading = false;
+      },
+      error: () => {
+        this.errorMessage = 'Failed to load pets';
+        this.isLoading = false;
+      }
+    });
   }
 
   navigateToAddPet(): void {
     this.router.navigate(['/add-pet']);
   }
 
+  navigateToEditPet(petId: string): void {
+    this.router.navigate(['/edit-pet', petId]);
+  }
+
   getKindDisplay(pet: Pet): string {
     return pet.kind === 'other' && pet.customKind ? pet.customKind : pet.kind;
+  }
+
+  navigateToFeedings(): void {
+    this.router.navigate(['/feedings']);
   }
 }
