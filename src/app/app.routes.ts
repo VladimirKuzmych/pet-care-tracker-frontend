@@ -7,6 +7,8 @@ import { EditPet } from './pages/edit-pet/edit-pet';
 import { Feedings } from './pages/feedings/feedings';
 import { UserLayout } from './layouts/user-layout/user-layout';
 import { authGuard } from './guards/auth.guard';
+import { PetList } from './components/pet-list/pet-list';
+import { UserProfile } from './pages/user-profile/user-profile';
 
 export const routes: Routes = [
   { path: 'login', component: Login },
@@ -17,10 +19,12 @@ export const routes: Routes = [
     canActivate: [authGuard],
     children: [
       { path: 'dashboard', component: Dashboard },
+      { path: 'pets', component: PetList },
       { path: 'add-pet', component: AddPet },
       { path: 'edit-pet/:id', component: EditPet },
       { path: 'feedings', component: Feedings },
-      { path: '', redirectTo: '/feedings', pathMatch: 'full' }
+      { path: 'profile', component: UserProfile },
+      { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
     ]
   }
 ];

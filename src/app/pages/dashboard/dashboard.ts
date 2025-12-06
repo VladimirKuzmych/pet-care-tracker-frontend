@@ -1,57 +1,44 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { PetApiService } from '../../services/pet-api.service';
-import { Pet } from '../../models/pet.model';
+import { FeedingApiService } from '../../services/feeding-api.service';
+import { AuthService } from '../../services/auth.service';
+import { FeedingSummary } from '../../models/feeding.model';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-dashboard',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })
 export class Dashboard implements OnInit {
-  private petApiService = inject(PetApiService);
-  private router = inject(Router);
+  private feedingApiService = inject(FeedingApiService);
+  private authService = inject(AuthService);
 
-  pets$!: Observable<Pet[]>;
-  pets: Pet[] = [];
   isLoading = false;
   errorMessage = '';
+  feedingSummaries: FeedingSummary[] = [];
 
   ngOnInit(): void {
-    this.loadPets();
+    this.loadFeedingSummary();
   }
 
-  loadPets(): void {
+  loadFeedingSummary(): void {
+    const user = this.authService.getCurrentUser();
+    if (!user?.userId) {
+      return;
+    }
+
     this.isLoading = true;
-    this.errorMessage = '';
-    this.petApiService.getAll().subscribe({
-      next: (pets) => {
-        this.pets = pets;
+    this.feedingApiService.getTodaySummary(user.userId).subscribe({
+      next: (summaries) => {
+        this.feedingSummaries = summaries;
         this.isLoading = false;
       },
-      error: () => {
-        this.errorMessage = 'Failed to load pets';
+      error: (error) => {
+        this.errorMessage = 'Failed to load feeding summary';
         this.isLoading = false;
-      }
+      },
     });
-  }
-
-  navigateToAddPet(): void {
-    this.router.navigate(['/add-pet']);
-  }
-
-  navigateToEditPet(petId: string): void {
-    this.router.navigate(['/edit-pet', petId]);
-  }
-
-  getKindDisplay(pet: Pet): string {
-    return pet.kind === 'other' && pet.customKind ? pet.customKind : pet.kind;
-  }
-
-  navigateToFeedings(): void {
-    this.router.navigate(['/feedings']);
   }
 }

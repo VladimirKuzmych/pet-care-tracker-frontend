@@ -1,0 +1,11 @@
+<div *ngIf="isOpen" class="modal-overlay" (click)="onOverlayClick()">
+  <div class="modal-content" (click)="onContentClick($event)">
+    <div class="modal-header">
+      <h2>{{ title }}</h2>
+      <button *ngIf="showCloseButton" class="close-btn" (click)="onCloseClick()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>

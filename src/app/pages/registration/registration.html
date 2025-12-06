@@ -60,7 +60,7 @@
         <div class="error-message" *ngIf="formControls['password'].errors; let passwordErrors">
           <span *ngIf="passwordErrors['required']">Password is required</span>
           <span *ngIf="passwordErrors['minlength']">Password must be at least 8 characters</span>
-          <span *ngIf="passwordErrors['pattern']">Password must contain digits and non-digits</span>
+          <span *ngIf="passwordErrors['pattern']">Password must contain letters and digits</span>
         </div>
       </div>
 

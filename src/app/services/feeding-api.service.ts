@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { Feeding } from '../models/feeding.model';
+import { Feeding, FeedingSummary } from '../models/feeding.model';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +12,10 @@ export class FeedingApiService {
 
   getAllForPet(petId: string): Observable<Feeding[]> {
     return this.httpClient.get<Feeding[]>(`${environment.apiUrl}/pets/${petId}/feedings`);
+  }
+
+  getTodaySummary(userId: string): Observable<FeedingSummary[]> {
+    return this.httpClient.get<FeedingSummary[]>(`${environment.apiUrl}/feedings/summary/users/${userId}/today`);
   }
 
   create(petId: string, feeding: Feeding): Observable<Feeding> {

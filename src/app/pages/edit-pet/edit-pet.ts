@@ -4,10 +4,11 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { Router, ActivatedRoute } from '@angular/router';
 import { PetApiService } from '../../services/pet-api.service';
 import { Pet } from '../../models/pet.model';
+import { BackButton } from '../../components/back-button/back-button';
 
 @Component({
   selector: 'app-edit-pet',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, BackButton],
   templateUrl: './edit-pet.html',
   styleUrl: './edit-pet.scss',
 })
@@ -111,10 +112,6 @@ export class EditPet implements OnInit {
         this.errorMessage = error.error?.message || 'Failed to update pet. Please try again.';
       }
     });
-  }
-
-  onCancel(): void {
-    this.router.navigate(['/dashboard']);
   }
 
   onDelete(): void {

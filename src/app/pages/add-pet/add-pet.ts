@@ -4,10 +4,11 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { Router } from '@angular/router';
 import { PetApiService } from '../../services/pet-api.service';
 import { Pet } from '../../models/pet.model';
+import { BackButton } from '../../components/back-button/back-button';
 
 @Component({
   selector: 'app-add-pet',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, BackButton],
   templateUrl: './add-pet.html',
   styleUrl: './add-pet.scss',
 })
@@ -72,9 +73,5 @@ export class AddPet {
         this.errorMessage = error.error?.message || 'Failed to add pet. Please try again.';
       }
     });
-  }
-
-  onCancel(): void {
-    this.router.navigate(['/dashboard']);
   }
 }

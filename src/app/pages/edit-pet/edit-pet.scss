@@ -2,6 +2,24 @@
   padding: 40px 20px;
   max-width: 600px;
   margin: 0 auto;
+
+  .page-header {
+    position: relative;
+    margin-bottom: 2rem;
+
+    app-back-button {
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 2rem;
+      color: #333;
+      text-align: center;
+    }
+  }
 }
 
 .edit-pet-card {
@@ -9,12 +27,6 @@
   padding: 40px;
   border-radius: 12px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-
-  h1 {
-    margin: 0 0 30px;
-    color: #333;
-    font-size: 28px;
-  }
 }
 
 .error-alert {
@@ -145,7 +157,6 @@
 }
 
 .btn-submit,
-.btn-secondary,
 .btn-delete {
   padding: 14px;
   border: none;
@@ -173,21 +184,6 @@
 
   &:active:not(:disabled) {
     transform: translateY(0);
-  }
-}
-
-.btn-secondary {
-  flex: 1;
-  background: white;
-  color: #667eea;
-  border: 2px solid #667eea;
-
-  &:hover:not(:disabled) {
-    background: #f8f9ff;
-  }
-
-  &:active:not(:disabled) {
-    background: #f0f2ff;
   }
 }
 

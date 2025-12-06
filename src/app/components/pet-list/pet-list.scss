@@ -1,0 +1,141 @@
+.pet-list-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.header-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.page-title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 0;
+  color: #333;
+  flex: 1;
+}
+
+.add-pet-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  background-color: white;
+  color: #7c3aed;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.content-section {
+  margin-top: 1.5rem;
+}
+
+.loading-message,
+.error-message,
+.empty-message {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.1rem;
+}
+
+.loading-message {
+  color: #666;
+}
+
+.error-message {
+  color: #dc3545;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  border-radius: 8px;
+}
+
+.empty-message {
+  color: #6c757d;
+}
+
+.pet-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.pet-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem;
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+  &:hover {
+    background-color: #f8f9fa;
+    border-color: #007bff;
+    box-shadow: 0 2px 6px rgba(0, 123, 255, 0.15);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+.pet-info {
+  flex: 1;
+}
+
+.pet-name {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+  color: #333;
+}
+
+.pet-details {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #666;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.pet-kind {
+  text-transform: capitalize;
+  font-weight: 500;
+}
+
+.separator {
+  color: #ccc;
+}
+
+.pet-breed {
+  color: #666;
+}
+
+.pet-arrow {
+  font-size: 1.5rem;
+  color: #999;
+  font-weight: 300;
+}

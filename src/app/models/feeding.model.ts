@@ -11,3 +11,12 @@ export interface FeedingGroupedByDate {
   date: string;
   feedings: Feeding[];
 }
+
+export interface FeedingSummary {
+  petId: number;
+  petName: string;
+  date: string;
+  totalFeedings: number;
+  totalGrams: number;
+  averageGramsPerFeeding: number;
+}

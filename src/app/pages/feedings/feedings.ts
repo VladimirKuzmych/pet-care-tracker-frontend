@@ -1,15 +1,18 @@
 import { Component, inject, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FeedingApiService } from '../../services/feeding-api.service';
 import { PetApiService } from '../../services/pet-api.service';
 import { Feeding, FeedingGroupedByDate } from '../../models/feeding.model';
 import { Pet } from '../../models/pet.model';
+import { BackButton } from '../../components/back-button/back-button';
+import { Modal } from '../../components/modal/modal';
+import { FeedingsSumPipe } from '../../pipes/feedings-sum.pipe';
 
 @Component({
   selector: 'app-feedings',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, BackButton, Modal, FeedingsSumPipe],
   templateUrl: './feedings.html',
   styleUrl: './feedings.scss',
 })
@@ -17,6 +20,7 @@ export class Feedings implements OnInit, AfterViewInit {
   private feedingApiService = inject(FeedingApiService);
   private petApiService = inject(PetApiService);
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
 
   @ViewChild('gramsInput') gramsInput?: ElementRef<HTMLInputElement>;
 
@@ -35,6 +39,16 @@ export class Feedings implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.loadPets();
+    
+    // Check for openModal query param
+    this.route.queryParams.subscribe(params => {
+      if (params['openModal'] === 'true') {
+        // Wait for pets to load before opening modal
+        setTimeout(() => {
+          this.openModal();
+        }, 100);
+      }
+    });
   }
 
   ngAfterViewInit(): void {
@@ -54,7 +68,6 @@ export class Feedings implements OnInit, AfterViewInit {
         if (pets.length > 0) {
           this.selectedPetId = pets[0].id || '';
           this.loadFeedingsForPet(this.selectedPetId);
-          this.openModal();
         } else {
           this.router.navigate(['/dashboard']);
         }
@@ -99,9 +112,7 @@ export class Feedings implements OnInit, AfterViewInit {
     const grouped = new Map<string, Feeding[]>();
     sorted.forEach((feeding) => {
       const date = new Date(feeding.fedAt).toLocaleDateString('en-US', {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
+        month: 'short',
         day: 'numeric',
       });
       if (!grouped.has(date)) {

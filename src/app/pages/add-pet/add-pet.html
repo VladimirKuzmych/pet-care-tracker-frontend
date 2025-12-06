@@ -1,6 +1,9 @@
 <div class="add-pet-container">
+  <div class="page-header">
+    <app-back-button></app-back-button>
+    <h1>Add Pet</h1>
+  </div>
   <div class="add-pet-card">
-    <h1>Add New Pet</h1>
 
     <div class="error-alert" *ngIf="errorMessage">
       {{ errorMessage }}
@@ -69,9 +72,6 @@
       </div>
 
       <div class="button-group">
-        <button type="button" class="btn-secondary" (click)="onCancel()" [disabled]="isLoading">
-          Cancel
-        </button>
         <button type="submit" class="btn-submit" [disabled]="petForm.invalid || isLoading">
           {{ isLoading ? 'Adding...' : 'Add Pet' }}
         </button>

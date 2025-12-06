@@ -1,0 +1,37 @@
+<div class="pet-list-container">
+  <div class="header-section">
+    <app-back-button></app-back-button>
+    <h1 class="page-title">My Pets</h1>
+    <button class="add-pet-button" (click)="navigateToAddPet()">
+      +
+    </button>
+  </div>
+
+  <div class="content-section">
+    <div *ngIf="isLoading" class="loading-message">
+      Loading pets...
+    </div>
+
+    <div *ngIf="errorMessage && !isLoading" class="error-message">
+      {{ errorMessage }}
+    </div>
+
+    <div *ngIf="!isLoading && !errorMessage && pets.length === 0" class="empty-message">
+      No pets found. Add your first pet!
+    </div>
+
+    <ul *ngIf="!isLoading && pets.length > 0" class="pet-list">
+      <li *ngFor="let pet of pets" class="pet-item" (click)="navigateToPetDetails(pet.id)">
+        <div class="pet-info">
+          <h3 class="pet-name">{{ pet.name }}</h3>
+          <p class="pet-details">
+            <span class="pet-kind">{{ pet.kind === 'other' ? pet.customKind : pet.kind }}</span>
+            <span class="separator">•</span>
+            <span class="pet-breed">{{ pet.breed }}</span>
+          </p>
+        </div>
+        <div class="pet-arrow">›</div>
+      </li>
+    </ul>
+  </div>
+</div>
