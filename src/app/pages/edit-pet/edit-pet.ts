@@ -6,6 +6,7 @@ import { PetApiService } from '../../services/pet-api.service';
 import { SharePetApiService } from '../../services/share-pet-api.service';
 import { Pet } from '../../models/pet.model';
 import { BackButton } from '../../components/back-button/back-button';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-edit-pet',
@@ -130,7 +131,7 @@ export class EditPet implements OnInit {
     this.sharePetApiService.sharePet(this.petId).subscribe({
       next: ({ token }) => {
         this.isLoading = false;
-        const shareUrl = `${window.location.origin}/accept-shared-pet/${token}`;
+        const shareUrl = `${environment.appUrl}/accept-shared-pet/${token}`;
         navigator.clipboard?.writeText(shareUrl).then(() => {
           this.shareMessage = 'Share url copied to clipboard!';
           setTimeout(() => this.shareMessage = '', 3000);
