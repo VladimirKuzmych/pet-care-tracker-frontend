@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PetApiService } from '../../services/pet-api.service';
+import { SharePetApiService } from '../../services/share-pet-api.service';
 import { Pet } from '../../models/pet.model';
 import { BackButton } from '../../components/back-button/back-button';
 
@@ -17,12 +18,14 @@ export class EditPet implements OnInit {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   private petApiService = inject(PetApiService);
+  private sharePetApiService = inject(SharePetApiService);
 
   petForm: FormGroup;
   isLoading = false;
   isLoadingData = true;
   errorMessage = '';
-  petId = '';
+  shareMessage = '';
+  petId: number | null = null;
 
   constructor() {
     this.petForm = this.fb.group({
@@ -45,7 +48,8 @@ export class EditPet implements OnInit {
   }
 
   ngOnInit(): void {
-    this.petId = this.route.snapshot.paramMap.get('id') || '';
+    const idParam = this.route.snapshot.paramMap.get('id');
+    this.petId = idParam ? +idParam : null;
     if (this.petId) {
       this.loadPet();
     } else {
@@ -54,6 +58,8 @@ export class EditPet implements OnInit {
   }
 
   loadPet(): void {
+    if (!this.petId) return;
+    
     this.isLoadingData = true;
     this.errorMessage = '';
 
@@ -88,7 +94,7 @@ export class EditPet implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.petForm.invalid) {
+    if (this.petForm.invalid || !this.petId) {
       return;
     }
 
@@ -114,22 +120,25 @@ export class EditPet implements OnInit {
     });
   }
 
-  onDelete(): void {
-    if (!confirm('Are you sure you want to delete this pet?')) {
-      return;
-    }
-
+  onShare(): void {
+    if (!this.petId) return;
+    
     this.isLoading = true;
     this.errorMessage = '';
+    this.shareMessage = '';
 
-    this.petApiService.delete(this.petId).subscribe({
-      next: () => {
+    this.sharePetApiService.sharePet(this.petId).subscribe({
+      next: ({ token }) => {
         this.isLoading = false;
-        this.router.navigate(['/dashboard']);
+        const shareUrl = `${window.location.origin}/accept-shared-pet/${token}`;
+        navigator.clipboard?.writeText(shareUrl).then(() => {
+          this.shareMessage = 'Share url copied to clipboard!';
+          setTimeout(() => this.shareMessage = '', 3000);
+        });
       },
       error: (error) => {
         this.isLoading = false;
-        this.errorMessage = error.error?.message || 'Failed to delete pet. Please try again.';
+        this.errorMessage = error.error?.message || 'Failed to generate share token. Please try again.';
       }
     });
   }

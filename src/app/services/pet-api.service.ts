@@ -25,15 +25,15 @@ export class PetApiService {
     return this.httpClient.get<Pet[]>(this.getBaseUrl());
   }
 
-  getById(petId: string): Observable<Pet> {
+  getById(petId: number): Observable<Pet> {
     return this.httpClient.get<Pet>(`${this.getBaseUrl()}/${petId}`);
   }
 
-  update(petId: string, pet: Pet): Observable<Pet> {
+  update(petId: number, pet: Pet): Observable<Pet> {
     return this.httpClient.put<Pet>(`${this.getBaseUrl()}/${petId}`, pet);
   }
 
-  delete(petId: string): Observable<void> {
+  delete(petId: number): Observable<void> {
     return this.httpClient.delete<void>(`${this.getBaseUrl()}/${petId}`);
   }
 }

@@ -43,7 +43,7 @@ export class PetList implements OnInit {
     this.router.navigate(['/add-pet']);
   }
 
-  navigateToPetDetails(petId: string | undefined): void {
+  navigateToPetDetails(petId: number | undefined): void {
     if (petId) {
       this.router.navigate(['/edit-pet', petId]);
     }

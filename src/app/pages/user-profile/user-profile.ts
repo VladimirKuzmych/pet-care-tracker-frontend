@@ -1,6 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { UserApiService } from '../../services/user-api.service';
 import { BackButton } from '../../components/back-button/back-button';
@@ -16,6 +17,7 @@ export class UserProfile implements OnInit {
   private authService = inject(AuthService);
   private userApiService = inject(UserApiService);
   private fb = inject(FormBuilder);
+  private router = inject(Router);
 
   isLoadingProfile = false;
   isLoadingPassword = false;
@@ -116,14 +118,21 @@ export class UserProfile implements OnInit {
       this.isLoadingProfile = true;
       this.userApiService.patchUser(user.userId, form.value).subscribe({
         next: () => {
-          this.profileMessage = 'Profile updated successfully';
+          this.profileMessage = 'Info updated successfully';
           this.isLoadingProfile = false;
         },
         error: (error) => {
-          this.profileError = error.error?.message || 'Failed to update profile';
+          this.profileError = error.error?.message || 'Failed to update info';
           this.isLoadingProfile = false;
         },
       });
+    }
+  }
+
+  logout(): void {
+    if (confirm('Are you sure you want to logout?')) {
+      this.authService.logout();
+      this.router.navigate(['/login']);
     }
   }
 }

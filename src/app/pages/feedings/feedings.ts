@@ -1,61 +1,41 @@
-import { Component, inject, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
-import { FeedingApiService } from '../../services/feeding-api.service';
-import { PetApiService } from '../../services/pet-api.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AddFeedingModal } from '../../components/add-feeding-modal/add-feeding-modal';
+import { BackButton } from '../../components/back-button/back-button';
 import { Feeding, FeedingGroupedByDate } from '../../models/feeding.model';
 import { Pet } from '../../models/pet.model';
-import { BackButton } from '../../components/back-button/back-button';
-import { Modal } from '../../components/modal/modal';
 import { FeedingsSumPipe } from '../../pipes/feedings-sum.pipe';
+import { FeedingApiService } from '../../services/feeding-api.service';
+import { PetApiService } from '../../services/pet-api.service';
 
 @Component({
   selector: 'app-feedings',
-  imports: [CommonModule, FormsModule, BackButton, Modal, FeedingsSumPipe],
+  imports: [CommonModule, FormsModule, BackButton, AddFeedingModal, FeedingsSumPipe],
   templateUrl: './feedings.html',
   styleUrl: './feedings.scss',
 })
-export class Feedings implements OnInit, AfterViewInit {
+export class Feedings implements OnInit {
   private feedingApiService = inject(FeedingApiService);
   private petApiService = inject(PetApiService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
 
-  @ViewChild('gramsInput') gramsInput?: ElementRef<HTMLInputElement>;
-
   pets: Pet[] = [];
   feedingsByDate: FeedingGroupedByDate[] = [];
   isLoading = false;
   errorMessage = '';
-  showModal = false;
-  selectedPetId = '';
-
-  newFeeding: Feeding = {
-    petId: '',
-    fedAt: this.getLocalDateTimeString(),
-    notes: '',
-  };
+  showModal = this.route.snapshot.queryParamMap.get('openModal') === 'true';
+  selectedPetId = +this.route.snapshot.queryParamMap.get('petId')! || null;
 
   ngOnInit(): void {
     this.loadPets();
     
-    // Check for openModal query param
-    this.route.queryParams.subscribe(params => {
-      if (params['openModal'] === 'true') {
-        // Wait for pets to load before opening modal
-        setTimeout(() => {
-          this.openModal();
-        }, 100);
-      }
-    });
-  }
-
-  ngAfterViewInit(): void {
-    if (this.showModal) {
-      setTimeout(() => {
-        this.gramsInput?.nativeElement.focus();
-      }, 0);
+    // Check for petId query param
+    const petIdParam = this.route.snapshot.queryParamMap.get('petId');
+    if (petIdParam) {
+      this.selectedPetId = +petIdParam;
     }
   }
 
@@ -66,8 +46,13 @@ export class Feedings implements OnInit, AfterViewInit {
         this.pets = pets;
         this.isLoading = false;
         if (pets.length > 0) {
-          this.selectedPetId = pets[0].id || '';
-          this.loadFeedingsForPet(this.selectedPetId);
+          // Use query param petId if provided, otherwise use first pet
+          if (!this.selectedPetId) {
+            this.selectedPetId = pets[0].id || null;
+          }
+          if (this.selectedPetId) {
+            this.loadFeedingsForPet(this.selectedPetId);
+          }
         } else {
           this.router.navigate(['/dashboard']);
         }
@@ -79,13 +64,11 @@ export class Feedings implements OnInit, AfterViewInit {
     });
   }
 
-  loadFeedingsForPet(petId: string): void {
-    if (!petId) return;
-    
+  loadFeedingsForPet(petId: number): void {
     this.isLoading = true;
     this.feedingApiService.getAllForPet(petId).subscribe({
       next: (feedings) => {
-        const pet = this.pets.find(p => p.id === petId);
+        const pet = this.pets.find(({ id }) => id === petId);
         const feedingsWithPetName = feedings.map(feeding => ({
           ...feeding,
           petName: pet?.name,
@@ -101,7 +84,9 @@ export class Feedings implements OnInit, AfterViewInit {
   }
 
   onPetFilterChange(): void {
-    this.loadFeedingsForPet(this.selectedPetId);
+    if (this.selectedPetId) {
+      this.loadFeedingsForPet(this.selectedPetId);
+    }
   }
 
   groupFeedingsByDate(feedings: Feeding[]): void {
@@ -133,49 +118,17 @@ export class Feedings implements OnInit, AfterViewInit {
       return;
     }
     this.showModal = true;
-    this.newFeeding = {
-      petId: this.pets[0].id || '',
-      fedAt: this.getLocalDateTimeString(),
-      notes: '',
-    };
-    setTimeout(() => {
-      this.gramsInput?.nativeElement.focus();
-    }, 0);
   }
 
   closeModal(): void {
     this.showModal = false;
-    this.errorMessage = '';
   }
 
-  getLocalDateTimeString(): string {
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, '0');
-    const day = String(now.getDate()).padStart(2, '0');
-    const hours = String(now.getHours()).padStart(2, '0');
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-    return `${year}-${month}-${day}T${hours}:${minutes}`;
-  }
-
-  submitFeeding(): void {
-    if (!this.newFeeding.petId) {
-      this.errorMessage = 'Please select a pet';
-      return;
+  onFeedingAdded(): void {
+    this.showModal = false;
+    if (this.selectedPetId) {
+      this.loadFeedingsForPet(this.selectedPetId);
     }
-
-    this.isLoading = true;
-    
-    this.feedingApiService.create(this.newFeeding.petId, this.newFeeding).subscribe({
-      next: () => {
-        this.closeModal();
-        this.loadFeedingsForPet(this.selectedPetId);
-      },
-      error: (error) => {
-        this.errorMessage = 'Failed to add feeding';
-        this.isLoading = false;
-      },
-    });
   }
 
   formatTime(fedAt: string): string {

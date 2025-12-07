@@ -1,6 +1,6 @@
 export interface Feeding {
-  id?: string;
-  petId: string;
+  id?: number;
+  petId: number;
   petName?: string;
   fedAt: string;
   grams?: number;

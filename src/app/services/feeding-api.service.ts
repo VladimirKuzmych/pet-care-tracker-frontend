@@ -10,7 +10,7 @@ import { Feeding, FeedingSummary } from '../models/feeding.model';
 export class FeedingApiService {
   private readonly httpClient = inject(HttpClient);
 
-  getAllForPet(petId: string): Observable<Feeding[]> {
+  getAllForPet(petId: number): Observable<Feeding[]> {
     return this.httpClient.get<Feeding[]>(`${environment.apiUrl}/pets/${petId}/feedings`);
   }
 
@@ -18,15 +18,15 @@ export class FeedingApiService {
     return this.httpClient.get<FeedingSummary[]>(`${environment.apiUrl}/feedings/summary/users/${userId}/today`);
   }
 
-  create(petId: string, feeding: Feeding): Observable<Feeding> {
+  create(petId: number, feeding: Feeding): Observable<Feeding> {
     return this.httpClient.post<Feeding>(`${environment.apiUrl}/pets/${petId}/feedings`, feeding);
   }
 
-  update(petId: string, feedingId: string, feeding: Feeding): Observable<Feeding> {
+  update(petId: number, feedingId: number, feeding: Feeding): Observable<Feeding> {
     return this.httpClient.put<Feeding>(`${environment.apiUrl}/pets/${petId}/feedings/${feedingId}`, feeding);
   }
 
-  delete(petId: string, feedingId: string): Observable<void> {
+  delete(petId: number, feedingId: number): Observable<void> {
     return this.httpClient.delete<void>(`${environment.apiUrl}/pets/${petId}/feedings/${feedingId}`);
   }
 }

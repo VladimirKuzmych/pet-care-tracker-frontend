@@ -9,6 +9,7 @@ import { UserLayout } from './layouts/user-layout/user-layout';
 import { authGuard } from './guards/auth.guard';
 import { PetList } from './components/pet-list/pet-list';
 import { UserProfile } from './pages/user-profile/user-profile';
+import { AcceptSharedPet } from './pages/accept-shared-pet/accept-shared-pet';
 
 export const routes: Routes = [
   { path: 'login', component: Login },
@@ -24,6 +25,7 @@ export const routes: Routes = [
       { path: 'edit-pet/:id', component: EditPet },
       { path: 'feedings', component: Feedings },
       { path: 'profile', component: UserProfile },
+      { path: 'accept-shared-pet/:token', component: AcceptSharedPet },
       { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
     ]
   }

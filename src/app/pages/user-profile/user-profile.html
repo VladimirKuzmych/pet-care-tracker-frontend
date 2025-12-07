@@ -5,9 +5,8 @@
     <div class="placeholder"></div>
   </div>
 
-  <!-- Update Profile Section -->
   <section class="profile-section">
-    <h2>Personal Information</h2>
+    <h2>Personal Info</h2>
     
     @if (profileMessage) {
       <div class="success-message">{{ profileMessage }}</div>
@@ -61,13 +60,12 @@
 
       <div class="button-wrapper">
         <button type="submit" class="btn btn-primary" [disabled]="isLoadingProfile">
-          {{ isLoadingProfile ? 'Updating...' : 'Update Profile' }}
+          {{ isLoadingProfile ? 'Updating...' : 'Update Info' }}
         </button>
       </div>
     </form>
   </section>
 
-  <!-- Update Password Section -->
   <section class="profile-section">
     <h2>Change Password</h2>
     
@@ -129,5 +127,12 @@
         </button>
       </div>
     </form>
+  </section>
+
+  <section class="profile-section logout-section">
+    <h2>Account</h2>
+    <button type="button" class="btn btn-danger" (click)="logout()">
+      Logout
+    </button>
   </section>
 </div>

@@ -8,10 +8,9 @@
   }
 
   <!-- Feeding Section -->
-  <section class="dashboard-section" routerLink="/feedings">
+  <section class="dashboard-section">
     <div class="section-header">
       <h2>Feeding</h2>
-      <a routerLink="/feedings" [queryParams]="{ openModal: 'true' }" class="add-button" (click)="$event.stopPropagation()">+</a>
     </div>
     <div class="section-content">
       @if (isLoading) {
@@ -19,8 +18,16 @@
       } @else if (feedingSummaries.length > 0) {
         <div class="feeding-summary-list">
           @for (summary of feedingSummaries; track summary.petId) {
-            <div class="feeding-summary-item">
-              <div class="pet-name">{{ summary.petName }} ate today</div>
+            <div class="feeding-summary-item" routerLink="/feedings" [queryParams]="{ petId: summary.petId }">
+              <div class="pet-name">
+                {{ summary.petName }} ate today
+                <a 
+                  routerLink="/feedings"
+                  [queryParams]="{ petId: summary.petId, openModal: 'true' }" 
+                  class="add-feeding-icon" 
+                  (click)="$event.stopPropagation()"
+                >+</a>
+              </div>
               <div class="summary-stats">
                 <div class="stat">
                   <span class="stat-label">Total:</span>

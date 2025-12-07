@@ -1,0 +1,59 @@
+<app-modal [isOpen]="isOpen" [title]="'Add Feeding'" (close)="onClose()">
+  <form (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="pet">Pet *</label>
+      <select id="pet" [(ngModel)]="feeding.petId" name="pet" required>
+        <option *ngFor="let pet of pets" [value]="pet.id">{{ pet.name }}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="fedAt">Date & Time *</label>
+      <input
+        type="datetime-local"
+        id="fedAt"
+        [(ngModel)]="feeding.fedAt"
+        name="fedAt"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="grams">Grams *</label>
+      <input
+        #gramsInput
+        type="number"
+        id="grams"
+        [(ngModel)]="feeding.grams"
+        name="grams"
+        placeholder="e.g., 200"
+        min="1"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="notes">Notes</label>
+      <textarea
+        id="notes"
+        [(ngModel)]="feeding.notes"
+        name="notes"
+        rows="3"
+        placeholder="Any additional notes..."
+      ></textarea>
+    </div>
+
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+
+    <div class="modal-actions">
+      <button type="button" class="btn btn-secondary" (click)="onClose()">
+        Cancel
+      </button>
+      <button type="submit" class="btn btn-primary" [disabled]="isLoading || !gramsInput.value">
+        {{ isLoading ? 'Adding...' : 'Add Feeding' }}
+      </button>
+    </div>
+  </form>
+</app-modal>
