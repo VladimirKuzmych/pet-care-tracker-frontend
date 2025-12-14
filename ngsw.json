@@ -1,0 +1,65 @@
+{
+  "configVersion": 1,
+  "timestamp": 1765738990014,
+  "index": "/pet-care-tracker-frontend/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/pet-care-tracker-frontend/favicon.ico",
+        "/pet-care-tracker-frontend/index.html",
+        "/pet-care-tracker-frontend/main-PGXLDD3W.js",
+        "/pet-care-tracker-frontend/manifest.webmanifest",
+        "/pet-care-tracker-frontend/polyfills-5CFQRCPP.js",
+        "/pet-care-tracker-frontend/styles-E4UTOSXD.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/pet-care-tracker-frontend/icons/pet-icon.svg"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [],
+  "hashTable": {
+    "/pet-care-tracker-frontend/favicon.ico": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+    "/pet-care-tracker-frontend/icons/pet-icon.svg": "ce6100ed6f463a1031c624d2557a60e3339bc1dc",
+    "/pet-care-tracker-frontend/index.html": "3933ae0279de178be6136ca968f4620c54bced60",
+    "/pet-care-tracker-frontend/main-PGXLDD3W.js": "5de4ab4462f3bfed86b3358aadbbb5fef081754b",
+    "/pet-care-tracker-frontend/manifest.webmanifest": "529000e1baae3f270ebb0eaf034f280192d3a3ac",
+    "/pet-care-tracker-frontend/polyfills-5CFQRCPP.js": "f2241e9a25858f895ce299d15f6f22e849e2fd72",
+    "/pet-care-tracker-frontend/styles-E4UTOSXD.css": "f3080873b67fed0f742cd9b07bdf3b8375887d2c"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ],
+  "navigationRequestStrategy": "performance"
+}
