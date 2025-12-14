@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "lint": "ng lint",
-    "deploy": "ng build --configuration production --base-href=/pet-care-tracker-frontend/ && npx angular-cli-ghpages --dir=dist/pet-care-tracker-frontend/browser"
+    "deploy": "ng build --configuration production --base-href=/pet-care-tracker-frontend/ && cp dist/pet-care-tracker-frontend/browser/index.html dist/pet-care-tracker-frontend/browser/404.html && npx angular-cli-ghpages --dir=dist/pet-care-tracker-frontend/browser"
   },
   "private": true,
   "dependencies": {
@@ -19,6 +19,7 @@
     "@angular/platform-browser": "^21.0.0",
     "@angular/platform-browser-dynamic": "^21.0.0",
     "@angular/router": "^21.0.0",
+    "@angular/service-worker": "^21.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.8.0",
     "zone.js": "~0.15.0"
