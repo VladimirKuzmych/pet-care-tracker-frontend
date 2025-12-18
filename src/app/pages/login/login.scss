@@ -114,9 +114,21 @@
   }
 }
 
-.login-link {
+.success-alert {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 14px;
   text-align: center;
-  margin-top: 20px;
+  border: 1px solid #c3e6cb;
+}
+
+.register-link,
+.reset-link {
+  text-align: center;
+  margin-top: 24px;
   font-size: 14px;
   color: #666;
 

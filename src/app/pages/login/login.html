@@ -6,6 +6,10 @@
       {{ errorMessage }}
     </div>
     
+    <div class="success-alert" *ngIf="successMessage">
+      {{ successMessage }}
+    </div>
+    
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
         <label for="email">Email</label>
@@ -38,8 +42,12 @@
         {{ isLoading ? 'Logging in...' : 'Login' }}
       </button>
       
-      <div class="login-link">
+      <div class="register-link">
         Don't have an account? <a routerLink="/registration" queryParamsHandling="merge">Register here</a>
+      </div>
+
+      <div class="reset-link">
+        Forgot password? <a (click)="onResetPassword()">{{ isResettingPassword ? 'Sending...' : 'Reset Password' }}</a>
       </div>
     </form>
   </div>

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { AuthApiService } from '../../services/auth-api.service';
 
 @Component({
   selector: 'app-login',
@@ -13,12 +14,15 @@ import { AuthService } from '../../services/auth.service';
 export class Login {
   loginForm: FormGroup;
   errorMessage = '';
+  successMessage = '';
   isLoading = false;
+  isResettingPassword = false;
   private returnUrl: string;
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
+    private authApiService: AuthApiService,
     private router: Router,
     private route: ActivatedRoute
   ) {
@@ -51,6 +55,36 @@ export class Login {
       },
       complete: () => {
         this.isLoading = false;
+      }
+    });
+  }
+
+  onResetPassword() {
+    const email = this.loginForm.get('email')?.value;
+    
+    if (!email || this.loginForm.get('email')?.invalid) {
+      this.errorMessage = 'Please enter a valid email address';
+      return;
+    }
+
+    const confirmed = confirm(`Are you sure you want to reset the password for ${email}? Check your email for further instructions.`);
+    
+    if (!confirmed) {
+      return;
+    }
+
+    this.isResettingPassword = true;
+    this.errorMessage = '';
+    this.successMessage = '';
+
+    this.authApiService.resetPassword(email).subscribe({
+      next: () => {
+        this.isResettingPassword = false;
+        this.successMessage = 'Password reset link has been sent to your email.';
+      },
+      error: (error) => {
+        this.isResettingPassword = false;
+        this.errorMessage = error.error?.message || 'Failed to send reset link. Please try again.';
       }
     });
   }
