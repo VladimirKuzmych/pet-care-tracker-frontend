@@ -6,10 +6,16 @@
   "start_url": "./",
   "icons": [
     {
+      "src": "icons/pet-icon.png",
+      "sizes": "180x180 192x192 512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
       "src": "icons/pet-icon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
-      "purpose": "maskable any"
+      "purpose": "any"
     }
   ]
 }
