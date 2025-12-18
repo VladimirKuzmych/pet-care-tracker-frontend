@@ -71,6 +71,22 @@
         </div>
       </div>
 
+      <div class="form-group">
+        <label for="dailyPortion">Daily Portion (grams)</label>
+        <input
+          type="number"
+          id="dailyPortion"
+          formControlName="dailyPortion"
+          class="form-control"
+          placeholder="e.g., 200"
+          min="0"
+        />
+        <div class="error-message" *ngIf="formControls['dailyPortion'].errors; let dailyPortionErrors">
+          <span *ngIf="dailyPortionErrors['required']">Daily portion is required</span>
+          <span *ngIf="dailyPortionErrors['min']">Daily portion must be a positive number</span>
+        </div>
+      </div>
+
       <div class="button-group">
         <button type="submit" class="btn-submit" [disabled]="petForm.invalid || isLoading">
           {{ isLoading ? 'Adding...' : 'Add Pet' }}

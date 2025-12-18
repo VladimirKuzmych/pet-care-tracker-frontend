@@ -4,4 +4,5 @@ export interface Pet {
   breed: string;
   kind: 'dog' | 'cat' | 'other';
   customKind?: string;
+  dailyPortion: number;
 }

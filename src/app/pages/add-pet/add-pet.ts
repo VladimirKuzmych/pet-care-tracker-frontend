@@ -26,7 +26,8 @@ export class AddPet {
       name: ['', [Validators.required, Validators.minLength(2)]],
       breed: ['', [Validators.required, Validators.minLength(2)]],
       kind: ['dog', [Validators.required]],
-      customKind: ['']
+      customKind: [''],
+      dailyPortion: [null, [Validators.required, Validators.min(0)]]
     });
 
     this.petForm.get('kind')?.valueChanges.subscribe(value => {
@@ -61,6 +62,7 @@ export class AddPet {
       name: this.petForm.value.name,
       breed: this.petForm.value.breed,
       kind: this.petForm.value.customKind || this.petForm.value.kind,
+      dailyPortion: this.petForm.value.dailyPortion,
     };
 
     this.petApiService.create(petData).subscribe({

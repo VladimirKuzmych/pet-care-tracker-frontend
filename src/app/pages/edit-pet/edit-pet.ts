@@ -33,7 +33,8 @@ export class EditPet implements OnInit {
       name: ['', [Validators.required, Validators.minLength(2)]],
       breed: ['', [Validators.required, Validators.minLength(2)]],
       kind: ['dog', [Validators.required]],
-      customKind: ['']
+      customKind: [''],
+      dailyPortion: [null, [Validators.required, Validators.min(0)]]
     });
 
     this.petForm.get('kind')?.valueChanges.subscribe(value => {
@@ -82,7 +83,8 @@ export class EditPet implements OnInit {
       name: pet.name,
       breed: pet.breed,
       kind: isOther ? 'other' : pet.kind,
-      customKind: isOther ? pet.customKind || pet.kind : ''
+      customKind: isOther ? pet.customKind || pet.kind : '',
+      dailyPortion: pet.dailyPortion || null
     });
   }
 
@@ -106,7 +108,8 @@ export class EditPet implements OnInit {
       name: this.petForm.value.name,
       breed: this.petForm.value.breed,
       kind: this.petForm.value.kind,
-      customKind: this.isOtherKind ? this.petForm.value.customKind : undefined
+      customKind: this.isOtherKind ? this.petForm.value.customKind : undefined,
+      dailyPortion: this.petForm.value.dailyPortion
     };
 
     this.petApiService.update(this.petId, petData).subscribe({

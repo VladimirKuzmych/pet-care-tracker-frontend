@@ -1,15 +1,21 @@
 {
-  "name": "pet-care-tracker-frontend",
-  "short_name": "pet-care-tracker-frontend",
+  "name": "Pet Care Tracker",
+  "short_name": "Pet Care Tracker",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",
   "icons": [
     {
+      "src": "icons/pet-icon.png",
+      "sizes": "180x180 192x192 512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
       "src": "icons/pet-icon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
-      "purpose": "maskable any"
+      "purpose": "any"
     }
   ]
 }

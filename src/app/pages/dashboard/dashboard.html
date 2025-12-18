@@ -31,12 +31,16 @@
                   <span class="stat-value">{{ summary?.totalGrams ?? '...' }}g</span>
                 </div>
                 <div class="stat">
-                  <span class="stat-label">Average:</span>
-                  <span class="stat-value">{{ summary?.averageGramsPerFeeding ?? '...' }}g</span>
+                  <span class="stat-label">Daily Portion:</span>
+                  <span class="stat-value">{{ pet.dailyPortion }}g</span>
                 </div>
                 <div class="stat">
                   <span class="stat-label">Feedings:</span>
                   <span class="stat-value">{{ summary?.totalFeedings ?? '...' }}</span>
+                </div>
+                <div class="stat">
+                  <span class="stat-label">Average:</span>
+                  <span class="stat-value">{{ summary?.averageGramsPerFeeding ?? '...' }}g</span>
                 </div>
               </div>
             </div>
