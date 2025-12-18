@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1766078019072,
+  "timestamp": 1766078260970,
   "index": "/pet-care-tracker-frontend/index.html",
   "assetGroups": [
     {
@@ -36,8 +36,8 @@
     {
       "name": "pets-api",
       "patterns": [
-        "https:\\/\\/[^/]*\\.railway\\.app\\/api\\/users\\/[^/]*\\/pets",
-        "https:\\/\\/[^/]*\\.railway\\.app\\/api\\/users\\/[^/]*\\/pets\\/[^/]*"
+        "https:\\/\\/[^/]*\\/api\\/users\\/[^/]*\\/pets",
+        "https:\\/\\/[^/]*\\/api\\/users\\/[^/]*\\/pets\\/[^/]*"
       ],
       "strategy": "performance",
       "maxSize": 100,
@@ -45,7 +45,7 @@
       "cacheQueryOptions": {
         "ignoreVary": true
       },
-      "version": 3
+      "version": 4
     }
   ],
   "hashTable": {
