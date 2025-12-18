@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1766077219894,
+  "timestamp": 1766077753377,
   "index": "/pet-care-tracker-frontend/index.html",
   "assetGroups": [
     {
@@ -45,7 +45,7 @@
       "cacheQueryOptions": {
         "ignoreVary": true
       },
-      "version": 1
+      "version": 2
     }
   ],
   "hashTable": {
