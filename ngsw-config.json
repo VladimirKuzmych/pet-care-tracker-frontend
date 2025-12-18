@@ -26,5 +26,20 @@
         ]
       }
     }
+  ],
+  "dataGroups": [
+    {
+      "version": 4,
+      "name": "pets-api",
+      "urls": [
+        "https://*/api/users/*/pets",
+        "https://*/api/users/*/pets/*"
+      ],
+      "cacheConfig": {
+        "strategy": "performance",
+        "maxSize": 100,
+        "maxAge": "1d"
+      }
+    }
   ]
 }

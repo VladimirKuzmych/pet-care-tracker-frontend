@@ -3,9 +3,7 @@
     <h1>Track</h1>
   </div>
 
-  @if (errorMessage) {
-    <div class="error-message">{{ errorMessage }}</div>
-  }
+  @let pets = pets$ | async;
 
   <!-- Feeding Section -->
   <section class="dashboard-section">
@@ -13,70 +11,52 @@
       <h2>Feeding</h2>
     </div>
     <div class="section-content">
-      @if (isLoading) {
-        <p class="loading-text">Loading...</p>
-      } @else if (feedingSummaries.length > 0) {
         <div class="feeding-summary-list">
-          @for (summary of feedingSummaries; track summary.petId) {
-            <div class="feeding-summary-item" routerLink="/feedings" [queryParams]="{ petId: summary.petId }">
+          @for (pet of pets; track pet.id) {
+            <div class="feeding-summary-item" routerLink="/feedings" [queryParams]="{ petId: pet.id }">
               <div class="pet-name">
-                {{ summary.petName }} ate today
+                {{ pet.name }} ate today
                 <a 
                   routerLink="/feedings"
-                  [queryParams]="{ petId: summary.petId, openModal: 'true' }" 
+                  [queryParams]="{ petId: pet.id, openModal: 'true' }" 
                   class="add-feeding-icon" 
                   (click)="$event.stopPropagation()"
                 >+</a>
               </div>
+
+              @let summary = pet.id! | petFeedingSummaryToday | async;
               <div class="summary-stats">
                 <div class="stat">
                   <span class="stat-label">Total:</span>
-                  <span class="stat-value">{{ summary.totalGrams }}g</span>
+                  <span class="stat-value">{{ summary?.totalGrams ?? '...' }}g</span>
                 </div>
                 <div class="stat">
                   <span class="stat-label">Average:</span>
-                  <span class="stat-value">{{ summary.averageGramsPerFeeding }}g</span>
+                  <span class="stat-value">{{ summary?.averageGramsPerFeeding ?? '...' }}g</span>
                 </div>
                 <div class="stat">
                   <span class="stat-label">Feedings:</span>
-                  <span class="stat-value">{{ summary.totalFeedings }}</span>
+                  <span class="stat-value">{{ summary?.totalFeedings ?? '...' }}</span>
                 </div>
               </div>
             </div>
           }
         </div>
-      } @else {
-        <p class="placeholder-text">No feedings today</p>
-      }
     </div>
   </section>
 
-  <!-- Weight Section -->
-  <!-- <section class="dashboard-section">
-    <div class="section-header">
-      <h2>Weight</h2>
-    </div>
-    <div class="section-content">
-      @if (isLoading) {
-        <p class="loading-text">Loading...</p>
-      } @else {
-        <p class="placeholder-text">Weight tracking will appear here</p>
-      }
-    </div>
-  </section> -->
-
   <!-- Pets Section -->
-  <section class="dashboard-section" [routerLink]="feedingSummaries.length ? '/pets' : '/add-pet'">
+  <section class="dashboard-section" [routerLink]="pets?.length ? '/pets' : '/add-pet'">
     <div class="section-header">
       <h2>My Pets</h2>
     </div>
     <div class="section-content">
-      @if (isLoading) {
+      @if (!pets) {
         <p class="loading-text">Loading...</p>
-      } @else if (!feedingSummaries.length) {
+      } @else if (!pets.length) {
         <p class="placeholder-text">Add your pets</p>
       } @else {
-        <p class="placeholder-text">{{ feedingSummaries.length }} pet{{ feedingSummaries.length > 1 ? 's' : '' }}</p>
+        <p class="placeholder-text">{{ pets.length }} pet{{ pets.length > 1 ? 's' : '' }}</p>
       }
     </div>
   </section>

@@ -14,6 +14,10 @@ export class FeedingApiService {
     return this.httpClient.get<Feeding[]>(`${environment.apiUrl}/pets/${petId}/feedings`);
   }
 
+  getPetTodaySummary(petId: number): Observable<FeedingSummary> {
+    return this.httpClient.get<FeedingSummary>(`${environment.apiUrl}/feedings/summary/pets/${petId}/today`);
+  }
+
   getTodaySummary(userId: string): Observable<FeedingSummary[]> {
     return this.httpClient.get<FeedingSummary[]>(`${environment.apiUrl}/feedings/summary/users/${userId}/today`);
   }
