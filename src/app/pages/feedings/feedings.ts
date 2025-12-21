@@ -28,6 +28,7 @@ export class Feedings implements OnInit {
   errorMessage = '';
   showModal = this.route.snapshot.queryParamMap.get('openModal') === 'true';
   selectedPetId = +this.route.snapshot.queryParamMap.get('petId')! || null;
+  editingFeeding: Feeding | null = null;
 
   ngOnInit(): void {
     this.loadPets();
@@ -117,18 +118,76 @@ export class Feedings implements OnInit {
       this.errorMessage = 'Please add a pet first';
       return;
     }
+    this.editingFeeding = null;
     this.showModal = true;
   }
 
   closeModal(): void {
     this.showModal = false;
+    this.editingFeeding = null;
   }
 
-  onFeedingAdded(): void {
-    this.showModal = false;
-    if (this.selectedPetId) {
-      this.loadFeedingsForPet(this.selectedPetId);
-    }
+  onFeedingAdded(feeding: Feeding): void {
+    this.isLoading = true;
+    this.feedingApiService.create(feeding.petId, feeding).subscribe({
+      next: () => {
+        this.showModal = false;
+        this.editingFeeding = null;
+        this.isLoading = false;
+        if (this.selectedPetId) {
+          this.loadFeedingsForPet(this.selectedPetId);
+        }
+      },
+      error: (error) => {
+        this.errorMessage = error.error?.message || 'Failed to add feeding';
+        this.isLoading = false;
+      },
+    });
+  }
+
+  onFeedingUpdated(feeding: Feeding): void {
+    if (!this.editingFeeding?.id) return;
+    
+    this.isLoading = true;
+    this.feedingApiService.update(feeding.petId, this.editingFeeding.id, feeding).subscribe({
+      next: () => {
+        this.showModal = false;
+        this.editingFeeding = null;
+        this.isLoading = false;
+        if (this.selectedPetId) {
+          this.loadFeedingsForPet(this.selectedPetId);
+        }
+      },
+      error: (error) => {
+        this.errorMessage = error.error?.message || 'Failed to update feeding';
+        this.isLoading = false;
+      },
+    });
+  }
+
+  onFeedingDeleted(feeding: Feeding): void {
+    if (!feeding.id) return;
+
+    this.isLoading = true;
+    this.feedingApiService.delete(feeding.petId, feeding.id).subscribe({
+      next: () => {
+        this.showModal = false;
+        this.editingFeeding = null;
+        this.isLoading = false;
+        if (this.selectedPetId) {
+          this.loadFeedingsForPet(this.selectedPetId);
+        }
+      },
+      error: (error) => {
+        this.errorMessage = error.error?.message || 'Failed to delete feeding';
+        this.isLoading = false;
+      },
+    });
+  }
+
+  editFeeding(feeding: Feeding): void {
+    this.editingFeeding = feeding;
+    this.showModal = true;
   }
 
   formatTime(fedAt: string): string {

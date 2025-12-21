@@ -31,7 +31,7 @@
         <table class="feeding-table">
           <tbody>
             <tr class="feeding-row">
-              <td *ngFor="let feeding of group.feedings" class="grams-cell">
+              <td *ngFor="let feeding of group.feedings" class="grams-cell" (click)="editFeeding(feeding)">
                 <div class="grams">{{ feeding.grams }}g</div>
                 <div class="feeding-time">{{ formatTime(feeding.fedAt) }}</div>
               </td>
@@ -45,8 +45,11 @@
   <app-add-feeding-modal
     [isOpen]="showModal"
     [selectedPetId]="selectedPetId"
+    [existingFeeding]="editingFeeding"
     [pets]="pets"
     (close)="closeModal()"
-    (feedingAdded)="onFeedingAdded()"
+    (feedingAdded)="onFeedingAdded($event)"
+    (feedingUpdated)="onFeedingUpdated($event)"
+    (feedingDeleted)="onFeedingDeleted($event)"
   ></app-add-feeding-modal>
 </div>

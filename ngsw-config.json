@@ -33,12 +33,14 @@
       "name": "pets-api",
       "urls": [
         "https://*/api/users/*/pets",
-        "https://*/api/users/*/pets/*"
+        "https://*/api/users/*/pets/*",
+        "https://*/api/pets/*/feedings"
       ],
       "cacheConfig": {
-        "strategy": "performance",
+        "strategy": "freshness",
         "maxSize": 100,
-        "maxAge": "1d"
+        "maxAge": "1d",
+        "timeout": "10u"
       }
     }
   ]

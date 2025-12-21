@@ -1,34 +1,56 @@
+.datetime-group {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 1rem;
+  align-items: end;
+}
+
 .form-group {
   margin-bottom: 1.5rem;
 
   label {
     display: block;
     margin-bottom: 0.5rem;
-    color: #555;
-    font-weight: 500;
-    font-size: 14px;
+    color: #374151;
+    font-weight: 600;
+    font-size: 0.875rem;
+    letter-spacing: 0.025em;
   }
 
   select,
   input,
   textarea {
+    height: 42px;
     width: 100%;
-    padding: 0.75rem;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 1rem;
+    min-width: calc(100% - 1rem);
+    padding: 0.625rem 0.875rem;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 6px;
+    font-size: 0.9375rem;
     font-family: inherit;
     box-sizing: border-box;
+    transition: all 0.15s ease;
+    background-color: #ffffff;
+
+    &:hover {
+      border-color: #d1d5db;
+    }
 
     &:focus {
       outline: none;
       border-color: #7c3aed;
-      box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+      box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.08);
     }
+  }
+
+  input[type="date"],
+  input[type="time"] {
+    cursor: pointer;
   }
 
   textarea {
     resize: vertical;
+    min-height: 80px;
   }
 }
 
@@ -50,7 +72,7 @@
   margin-top: 1.5rem;
 
   .btn {
-    padding: 0.75rem 1.5rem;
+    padding: .75rem 1.375rem;
     border: none;
     border-radius: 8px;
     font-size: 1rem;
@@ -78,6 +100,15 @@
 
       &:hover:not(:disabled) {
         background: #6d28d9;
+      }
+    }
+
+    &.btn-danger {
+      background: #ef4444;
+      color: white;
+
+      &:hover:not(:disabled) {
+        background: #dc2626;
       }
     }
   }
