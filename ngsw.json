@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1766089670216,
+  "timestamp": 1766313191739,
   "index": "/pet-care-tracker-frontend/index.html",
   "assetGroups": [
     {
@@ -40,9 +40,10 @@
         "https:\\/\\/[^/]*\\/api\\/users\\/[^/]*\\/pets",
         "https:\\/\\/[^/]*\\/api\\/users\\/[^/]*\\/pets\\/[^/]*"
       ],
-      "strategy": "performance",
+      "strategy": "freshness",
       "maxSize": 100,
       "maxAge": 86400000,
+      "timeoutMs": 1000,
       "cacheQueryOptions": {
         "ignoreVary": true
       },
