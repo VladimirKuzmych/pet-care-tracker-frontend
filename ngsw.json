@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1766319600431,
+  "timestamp": 1766323682882,
   "index": "/pet-care-tracker-frontend/index.html",
   "assetGroups": [
     {
@@ -12,7 +12,7 @@
       },
       "urls": [
         "/pet-care-tracker-frontend/index.html",
-        "/pet-care-tracker-frontend/main-CB4XQ3Y5.js",
+        "/pet-care-tracker-frontend/main-R47755TC.js",
         "/pet-care-tracker-frontend/manifest.webmanifest",
         "/pet-care-tracker-frontend/polyfills-5CFQRCPP.js",
         "/pet-care-tracker-frontend/styles-E4UTOSXD.css"
@@ -54,8 +54,8 @@
   "hashTable": {
     "/pet-care-tracker-frontend/icons/pet-icon.png": "be90565dfe143ae97719fd344574fc83d742ddb0",
     "/pet-care-tracker-frontend/icons/pet-icon.svg": "ce6100ed6f463a1031c624d2557a60e3339bc1dc",
-    "/pet-care-tracker-frontend/index.html": "2d6367df7a7a2b12411bdeab8d3a3d40f64e4552",
-    "/pet-care-tracker-frontend/main-CB4XQ3Y5.js": "e5d4a0da7b7c0b4a95d7f578d3dad2891f004934",
+    "/pet-care-tracker-frontend/index.html": "1a79486f07f71ec06c180b412cc103cf2113ee54",
+    "/pet-care-tracker-frontend/main-R47755TC.js": "b758dbe2ead878b9b35a1d7543a67e436db04f2e",
     "/pet-care-tracker-frontend/manifest.webmanifest": "f7915f009c120fee44f695d6506a2b55870b254a",
     "/pet-care-tracker-frontend/polyfills-5CFQRCPP.js": "f2241e9a25858f895ce299d15f6f22e849e2fd72",
     "/pet-care-tracker-frontend/styles-E4UTOSXD.css": "f3080873b67fed0f742cd9b07bdf3b8375887d2c"
