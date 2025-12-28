@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1766950134985,
+  "timestamp": 1766950498822,
   "index": "/pet-care-tracker-frontend/index.html",
   "assetGroups": [
     {
@@ -37,8 +37,7 @@
     {
       "name": "pets-feedings-api",
       "patterns": [
-        "https:\\/\\/[^/]*\\/api\\/users\\/[^/]*\\/pets",
-        "https:\\/\\/[^/]*\\/api\\/pets\\/[^/]*\\/feedings\\/today"
+        "https:\\/\\/[^/]*\\/api\\/users\\/[^/]*\\/pets"
       ],
       "strategy": "performance",
       "maxSize": 100,
