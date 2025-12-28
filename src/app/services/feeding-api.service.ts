@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { Feeding, FeedingSummary } from '../models/feeding.model';
+import { Feeding } from '../models/feeding.model';
 
 @Injectable({
   providedIn: 'root',
@@ -10,16 +10,15 @@ import { Feeding, FeedingSummary } from '../models/feeding.model';
 export class FeedingApiService {
   private readonly httpClient = inject(HttpClient);
 
-  getAllForPet(petId: number): Observable<Feeding[]> {
-    return this.httpClient.get<Feeding[]>(`${environment.apiUrl}/pets/${petId}/feedings`);
+  getAllForPet(petId: number, params: { startDate: string; endDate: string }): Observable<Feeding[]> {
+    return this.httpClient.get<Feeding[]>(`${environment.apiUrl}/pets/${petId}/feedings`, { params });
   }
 
-  getPetTodaySummary(petId: number): Observable<FeedingSummary> {
-    return this.httpClient.get<FeedingSummary>(`${environment.apiUrl}/feedings/summary/pets/${petId}/today`);
-  }
-
-  getTodaySummary(userId: string): Observable<FeedingSummary[]> {
-    return this.httpClient.get<FeedingSummary[]>(`${environment.apiUrl}/feedings/summary/users/${userId}/today`);
+  getTodayForPet(petId: number, forceUpdate = false): Observable<Feeding[]> {
+    return this.httpClient.get<Feeding[]>(
+      `${environment.apiUrl}/pets/${petId}/feedings/today`,
+      { headers: forceUpdate ? { 'ngsw-bypass': 'true' } : {} },
+    );
   }
 
   create(petId: number, feeding: Feeding): Observable<Feeding> {

@@ -22,8 +22,6 @@ export class AddFeedingModal implements OnChanges {
   @Output() feedingUpdated = new EventEmitter<Feeding>();
   @Output() feedingDeleted = new EventEmitter<Feeding>();
 
-  @ViewChild('gramsInput') gramsInput?: ElementRef<HTMLInputElement>;
-
   isLoading = false;
   errorMessage = '';
 
@@ -42,15 +40,13 @@ export class AddFeedingModal implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['isOpen'] && changes['isOpen'].currentValue) {
+      this.isLoading = false;
+      
       if (this.existingFeeding) {
         this.populateFormFromExisting();
       } else {
         this.initializeDateAndTime();
       }
-      setTimeout(() => {
-        this.gramsInput?.nativeElement.focus();
-        this.gramsInput?.nativeElement.click();
-      }, 0);
     }
 
     if (changes['existingFeeding'] && changes['existingFeeding'].currentValue) {
@@ -93,6 +89,7 @@ export class AddFeedingModal implements OnChanges {
     }
 
     this.feeding.fedAt = `${this.feedingDate}T${this.feedingTime}`;
+    this.isLoading = true;
 
     if (this.isEditMode) {
       this.feedingUpdated.emit(this.feeding);

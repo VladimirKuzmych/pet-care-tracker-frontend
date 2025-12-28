@@ -1,4 +1,4 @@
-<div class="feedings-container">
+<div class="feedings-container" appScrollTracker (scrolledToBottom)="loadPreviousWeek()">
   <div class="header-section">
     <app-back-button></app-back-button>
     <h1 class="page-title">Feeding</h1>
@@ -14,8 +14,6 @@
   <div *ngIf="errorMessage" class="error-message">
     {{ errorMessage }}
   </div>
-
-  <div *ngIf="isLoading" class="loading">Loading...</div>
 
   <div *ngIf="!isLoading && feedingsByDate.length === 0" class="no-data">
     <p>No feeding records yet. Click "Add Feeding" to get started!</p>
@@ -40,6 +38,11 @@
         </table>
       </div>
     </div>
+  </div>
+
+  <div class="load-more-container">
+    <button *ngIf="!isLoading && !hasLoadedHistory" class="load-more-button" (click)="loadPreviousWeek()">Load history</button>
+    <div *ngIf="isLoading" class="loading-spinner">Loading...</div>
   </div>
 
   <app-add-feeding-modal

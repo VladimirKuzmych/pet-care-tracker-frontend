@@ -30,17 +30,14 @@
   "dataGroups": [
     {
       "version": 4,
-      "name": "pets-api",
+      "name": "pets-feedings-api",
       "urls": [
-        "https://*/api/users/*/pets",
-        "https://*/api/users/*/pets/*",
-        "https://*/api/pets/*/feedings"
+        "https://*/api/users/*/pets"
       ],
       "cacheConfig": {
-        "strategy": "freshness",
+        "strategy": "performance",
         "maxSize": 100,
-        "maxAge": "1d",
-        "timeout": "10u"
+        "maxAge": "1d"
       }
     }
   ]

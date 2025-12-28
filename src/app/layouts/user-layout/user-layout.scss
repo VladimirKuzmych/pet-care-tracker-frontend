@@ -1,5 +1,5 @@
 .user-layout {
-  height: 100dvh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
 }
@@ -49,5 +49,5 @@
 
 .main-content {
   position: relative;
-  overflow: auto;
+  flex: 1;
 }

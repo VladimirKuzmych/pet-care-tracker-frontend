@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { FeedingSummary } from '../models/feeding.model';
+import { Feeding, FeedingSummary } from '../models/feeding.model';
 import { FeedingApiService } from '../services/feeding-api.service';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 @Pipe({
   name: 'petFeedingSummaryToday',
@@ -12,7 +12,22 @@ export class PetFeedingSummaryTodayPipe implements PipeTransform {
     private feedingApiService: FeedingApiService,
   ) {}
 
-  transform(petId: number): Observable<FeedingSummary> {
-    return this.feedingApiService.getPetTodaySummary(petId);
+  transform(petId: number, dailyPortion: number): Observable<FeedingSummary> {
+    return this.feedingApiService.getTodayForPet(petId, true).pipe(
+      map((feedings) => this.getSummaryForFeedings(feedings, petId, dailyPortion)),
+    );
+  }
+
+  private getSummaryForFeedings(feedings: Feeding[], petId: number, dailyPortion: number): FeedingSummary {
+    const totalFeedings = feedings.length;
+    const totalGrams = feedings.reduce((sum, feeding) => sum + (feeding.grams || 0), 0);
+    const leftoverGrams = Math.max(0, dailyPortion - totalGrams);
+
+    return {
+      petId,
+      totalFeedings,
+      totalGrams,
+      leftoverGrams,
+    };
   }
 }

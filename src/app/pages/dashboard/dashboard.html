@@ -24,23 +24,15 @@
                 >+</a>
               </div>
 
-              @let summary = pet.id! | petFeedingSummaryToday | async;
+              @let summary = pet.id! | petFeedingSummaryToday : pet.dailyPortion | async;
               <div class="summary-stats">
                 <div class="stat">
-                  <span class="stat-label">Total:</span>
-                  <span class="stat-value">{{ summary?.totalGrams ?? '...' }}g</span>
+                  <span class="stat-label">Summary:</span>
+                  <span class="stat-value">{{ summary?.totalGrams ?? '...' }}g / {{ pet.dailyPortion }}g</span>
                 </div>
                 <div class="stat">
-                  <span class="stat-label">Daily Portion:</span>
-                  <span class="stat-value">{{ pet.dailyPortion }}g</span>
-                </div>
-                <div class="stat">
-                  <span class="stat-label">Feedings:</span>
-                  <span class="stat-value">{{ summary?.totalFeedings ?? '...' }}</span>
-                </div>
-                <div class="stat">
-                  <span class="stat-label">Average:</span>
-                  <span class="stat-value">{{ summary?.averageGramsPerFeeding ?? '...' }}g</span>
+                  <span class="stat-label">Leftover:</span>
+                  <span class="stat-value">{{ summary?.leftoverGrams ?? '...' }}g</span>
                 </div>
               </div>
             </div>

@@ -14,9 +14,7 @@ export interface FeedingGroupedByDate {
 
 export interface FeedingSummary {
   petId: number;
-  petName: string;
-  date: string;
   totalFeedings: number;
   totalGrams: number;
-  averageGramsPerFeeding: number;
+  leftoverGrams: number;
 }

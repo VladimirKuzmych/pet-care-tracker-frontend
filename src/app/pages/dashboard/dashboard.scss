@@ -142,8 +142,8 @@
 
           .summary-stats {
             display: flex;
-            gap: 24px;
-            flex-wrap: wrap;
+            flex-direction: column;
+            gap: 16px;
 
             .stat {
               display: flex;
